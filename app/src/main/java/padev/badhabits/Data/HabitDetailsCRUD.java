@@ -12,19 +12,20 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "badHabitsManager";
-    private static final String TABLE_HABITS_DETAILS = "habits";
+    private static final String TABLE_HABITS_DETAILS = "habitsDetails";
     private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
+    private static final String KEY_DOSE = "dose";
+    private static final String KEY_CONCENTRATION = "concentration";
+    private static final String KEY_WEIGHT = "weight";
 
     public HabitDetailsCRUD(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_HABITS_DETAILS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT" + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_DOSE + " INTEGER," + KEY_CONCENTRATION +  " INTEGER," + KEY_WEIGHT +  " INTEGER" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -38,13 +39,15 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
     @Override
     public void insertData(IData data) {
 
-        Habit habit = (Habit) data;
+        HabitDetails habitDetails = (HabitDetails) data;
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, habit.getName());
+        values.put(KEY_DOSE, habitDetails.getDose());
+        values.put(KEY_CONCENTRATION, habitDetails.getConcentration());
+        values.put(KEY_WEIGHT, habitDetails.getWeight());
 
-        habit.setId(db.insert(TABLE_HABITS_DETAILS, null, values));
+        habitDetails.setId(db.insert(TABLE_HABITS_DETAILS, null, values));
 
         db.close();
     }
@@ -54,7 +57,7 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_HABITS_DETAILS, new String[] { KEY_ID,
-                        KEY_NAME}, KEY_ID + "=?",
+                        KEY_DOSE, KEY_CONCENTRATION, KEY_WEIGHT}, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
 
         if (cursor != null){
@@ -63,7 +66,7 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
 
         assert cursor != null;
 
-        return new Habit(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
+        return new HabitDetails(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)));
     }
 
     @Override
@@ -75,15 +78,17 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
 
     @Override
     public int updateData(IData data) {
-        Habit habit = (Habit) data;
+        HabitDetails habitDetails = (HabitDetails) data;
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, habit.getName());
+        values.put(KEY_DOSE, habitDetails.getDose());
+        values.put(KEY_CONCENTRATION, habitDetails.getConcentration());
+        values.put(KEY_WEIGHT, habitDetails.getWeight());
 
         return db.update(TABLE_HABITS_DETAILS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(habit.getId()) });
+                new String[] { String.valueOf(habitDetails.getId()) });
     }
 
     @Override

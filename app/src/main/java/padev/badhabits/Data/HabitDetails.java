@@ -1,22 +1,25 @@
 package padev.badhabits.Data;
 
-import android.provider.ContactsContract;
-
 import java.util.Date;
 
 public class HabitDetails implements IData  {
 
     protected long id;
-    protected Date date;
-    protected float count;
-    protected float flat;
-    protected float weight;
+    protected int dose;
+    protected int concentration;
+    protected int weight;
 
-    public HabitDetails (int id, Date date, float count, float flat, float weight) {
+    public HabitDetails (int dose, int concentration, int weight) {
+        this.id = -1;
+        this.dose = dose;
+        this.concentration = concentration;
+        this.weight = weight;
+    }
+
+    public HabitDetails (long id, int dose, int concentration, int weight) {
         this.id = id;
-        this.date = date;
-        this.count = count;
-        this.flat = flat;
+        this.dose = dose;
+        this.concentration = concentration;
         this.weight = weight;
     }
 
@@ -24,16 +27,12 @@ public class HabitDetails implements IData  {
         return id;
     }
 
-    public Date getDate() {
-        return date;
+    public float getDose() {
+        return dose;
     }
 
-    public float getCount() {
-        return count;
-    }
-
-    public float getFlat() {
-        return flat;
+    public float getConcentration() {
+        return concentration;
     }
 
     public float getWeight() {
@@ -44,19 +43,15 @@ public class HabitDetails implements IData  {
         this.id = id;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDose(int dose) {
+        this.dose = dose;
     }
 
-    public void setCount(float count) {
-        this.count = count;
+    public void setConcentration(int concentration) {
+        this.concentration = concentration;
     }
 
-    public void setFlat(float flat) {
-        this.flat = flat;
-    }
-
-    public void setWeight(float weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 }
