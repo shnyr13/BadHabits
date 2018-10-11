@@ -16,7 +16,8 @@
     <EditText
         android:id="@+id/activity_habit_input_alert_dose_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:inputType="number" >
         <requestFocus />
     </EditText>
 
@@ -30,8 +31,8 @@
     <EditText
         android:id="@+id/activity_habit_input_alert_concentration_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <requestFocus />
+        android:layout_height="wrap_content"
+        android:inputType="number" >
     </EditText>
 
     <TextView
@@ -44,8 +45,8 @@
     <EditText
         android:id="@+id/activity_habit_input_alert_weight_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <requestFocus />
+        android:layout_height="wrap_content"
+        android:inputType="number" >
     </EditText>
 
 </LinearLayout>

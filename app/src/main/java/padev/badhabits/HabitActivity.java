@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import padev.badhabits.Data.Habit;
 import padev.badhabits.Data.HabitDetails;
 import padev.badhabits.Data.HabitDetailsCRUD;
 import padev.badhabits.Data.IData;
+import padev.badhabits.Utils.KeyboardsUtils;
 
 public class HabitActivity extends AppCompatActivity {
 
@@ -92,6 +94,12 @@ public class HabitActivity extends AppCompatActivity {
 
                 long habitId = habit.getId();
 
+                // TODO show intermediate error
+                if (doseEditText.getText().toString().isEmpty()
+                        || concentrationEditText.getText().toString().isEmpty()
+                        || weightEditText.getText().toString().isEmpty())
+                        return;
+
                 int dose = Integer.parseInt(doseEditText.getText().toString());
                 int concentration = Integer.parseInt(concentrationEditText.getText().toString());
                 int weight = Integer.parseInt(weightEditText.getText().toString());
@@ -112,6 +120,9 @@ public class HabitActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
 
         alertDialog.show();
+
+        // TODO (not working)
+        KeyboardsUtils.showSoftKeyboard(doseEditText, this);
     }
 
     public DataPoint[] GetPoints() {
