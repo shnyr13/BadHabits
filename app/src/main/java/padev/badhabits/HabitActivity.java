@@ -10,11 +10,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.series.DataPoint;
+
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import padev.badhabits.Data.Habit;
 import padev.badhabits.Data.HabitDetails;
 import padev.badhabits.Data.HabitDetailsCRUD;
+import padev.badhabits.Data.IData;
 
 public class HabitActivity extends AppCompatActivity {
 
@@ -23,26 +28,47 @@ public class HabitActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private DataPoint[] doseArr;
+    private DataPoint[] concentrationArr;
+    private DataPoint[] weightArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_habit);
         ButterKnife.bind(this);
 
-        habit = new Habit(getIntent().getStringExtra("habit_name"), Long.parseLong(getIntent().getStringExtra("habit_id")));
-        habitDetailsCRUD = new HabitDetailsCRUD(this);
+        habit = new Habit(Long.parseLong(getIntent().getStringExtra("habit_id")), getIntent().getStringExtra("habit_name"));
 
-
-        TextView habitNameTextView = (TextView) findViewById(R.id.activity_habit_habit_name);
+        TextView habitNameTextView = findViewById(R.id.activity_habit_habit_name);
         habitNameTextView.setText(habit.getName());
 
-        viewPager = (ViewPager) findViewById(R.id.activity_habit_view_pager);
+        viewPager = findViewById(R.id.activity_habit_view_pager);
         viewPager.setAdapter(
                 new SampleFragmentPagerAdapter(getSupportFragmentManager(), this));
 
-        tabLayout = (TabLayout) findViewById(R.id.activity_habit_tabs);
+        tabLayout = findViewById(R.id.activity_habit_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        // HabitDetailsCRUD is Singleton
+        habitDetailsCRUD = HabitDetailsCRUD.getInstance(this);
+
+        ArrayList<IData> habitsDetails =  habitDetailsCRUD.selectDataByHabitId(habit.getId());
+
+        doseArr = new DataPoint[habitsDetails.size()];
+        concentrationArr = new DataPoint[habitsDetails.size()];
+        weightArr = new DataPoint[habitsDetails.size()];
+
+        int i = 1;
+        for (IData data: habitsDetails) {
+
+            doseArr[i - 1] = new DataPoint(i, ((HabitDetails) data).getDose());
+            concentrationArr[i - 1] = new DataPoint(i, ((HabitDetails) data).getConcentration());
+            weightArr[i - 1] = new DataPoint(i, ((HabitDetails) data).getWeight());
+
+            i++;
+        }
     }
 
     @OnClick(R.id.activity_habit_fab)
@@ -54,9 +80,9 @@ public class HabitActivity extends AppCompatActivity {
 
         alertDialogBuilder.setView(promptsView);
 
-        final EditText doseEditText = (EditText) promptsView.findViewById(R.id.activity_habit_input_alert_dose_edit_text);
-        final EditText concentrationEditText = (EditText) promptsView.findViewById(R.id.activity_habit_input_alert_concentration_edit_text);
-        final EditText weightEditText = (EditText) promptsView.findViewById(R.id.activity_habit_input_alert_weight_edit_text);
+        final EditText doseEditText = promptsView.findViewById(R.id.activity_habit_input_alert_dose_edit_text);
+        final EditText concentrationEditText = promptsView.findViewById(R.id.activity_habit_input_alert_concentration_edit_text);
+        final EditText weightEditText = promptsView.findViewById(R.id.activity_habit_input_alert_weight_edit_text);
 
         alertDialogBuilder.setCancelable(false);
 
@@ -64,11 +90,13 @@ public class HabitActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                long habitId = habit.getId();
+
                 int dose = Integer.parseInt(doseEditText.getText().toString());
                 int concentration = Integer.parseInt(concentrationEditText.getText().toString());
-                int weight = Integer.parseInt(concentrationEditText.getText().toString());
+                int weight = Integer.parseInt(weightEditText.getText().toString());
 
-                HabitDetails habitDetails = new HabitDetails(dose, concentration, weight);
+                HabitDetails habitDetails = new HabitDetails(habitId, dose, concentration, weight);
 
                 habitDetailsCRUD.insertData(habitDetails);
             }
@@ -86,15 +114,27 @@ public class HabitActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void drawGraphic() {
-        int currentItem = viewPager.getCurrentItem();
+    public DataPoint[] GetPoints() {
 
-        if (currentItem == 0) {
+        int page = viewPager.getCurrentItem();
 
-        } else if (currentItem == 1) {
-
-        } else if (currentItem == 2) {
-
+        if (page == 0) {
+            return doseArr;
+        }
+        else if (page == 1) {
+            return concentrationArr;
+        }
+        else if (page == 2) {
+            return weightArr;
+        }
+        else {
+            return new DataPoint[] {
+                    new DataPoint(0, 1),
+                    new DataPoint(1, 5),
+                    new DataPoint(2, 3),
+                    new DataPoint(3, 2),
+                    new DataPoint(4, 6)
+            };
         }
     }
 }

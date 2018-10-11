@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject {
+public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject, CRUDSingleton {
+
+    private static HabitCRUD instance = null;
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "badHabitsManager";
@@ -16,16 +18,15 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject {
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
 
-    public HabitCRUD(Context context) {
+    private HabitCRUD(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_HABITS + "("
+        String CREATE_HABITS_TABLE = "CREATE TABLE " + TABLE_HABITS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        db.execSQL(CREATE_HABITS_TABLE);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, habit.getName());
 
-        habit.setId(db.insert(TABLE_HABITS, null, values));
+        habit.setId((int) db.insert(TABLE_HABITS, null, values));
 
         db.close();
     }
@@ -63,7 +64,7 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject {
 
         assert cursor != null;
 
-        return new Habit(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
+        return new Habit(Long.parseLong(cursor.getString(0)), cursor.getString(1));
     }
 
     @Override
@@ -78,7 +79,7 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject {
 
         if (cursor.moveToFirst()) {
             do {
-                Habit habit = new Habit(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
+                Habit habit = new Habit(Long.parseLong(cursor.getString(0)), cursor.getString(1));
                 habits.add(habit);
             } while (cursor.moveToNext());
         }
@@ -111,5 +112,11 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_HABITS, null, null);
         db.close();
+    }
+
+    public static HabitCRUD getInstance(Context context) {
+        if (instance == null) instance = new HabitCRUD(context);
+
+        return instance;
     }
 }

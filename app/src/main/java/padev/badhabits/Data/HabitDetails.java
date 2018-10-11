@@ -5,19 +5,22 @@ import java.util.Date;
 public class HabitDetails implements IData  {
 
     protected long id;
+    protected long habitId;
     protected int dose;
     protected int concentration;
     protected int weight;
 
-    public HabitDetails (int dose, int concentration, int weight) {
+    public HabitDetails (long habitId, int dose, int concentration, int weight) {
         this.id = -1;
+        this.habitId = habitId;
         this.dose = dose;
         this.concentration = concentration;
         this.weight = weight;
     }
 
-    public HabitDetails (long id, int dose, int concentration, int weight) {
+    public HabitDetails (long id, long habitId, int dose, int concentration, int weight) {
         this.id = id;
+        this.habitId = habitId;
         this.dose = dose;
         this.concentration = concentration;
         this.weight = weight;
@@ -26,6 +29,8 @@ public class HabitDetails implements IData  {
     public long getId() {
         return id;
     }
+
+    public long getHabitId() { return habitId; }
 
     public float getDose() {
         return dose;

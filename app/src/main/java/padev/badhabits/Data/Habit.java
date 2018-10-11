@@ -5,9 +5,9 @@ public class Habit implements IData {
     protected long id;
     protected String name;
 
-    public Habit(String name, long id) {
-        this.name = name;
+    public Habit(long id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     public Habit(String name) {
@@ -22,7 +22,7 @@ public class Habit implements IData {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

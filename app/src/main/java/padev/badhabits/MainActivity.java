@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.stetho.Stetho;
+
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -26,9 +28,14 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // for SQLite view
+        Stetho.initializeWithDefaults(this);
+
         ButterKnife.bind(this);
 
-        habitCRUD = new HabitCRUD(this);
+        // HabitCRUD is Singleton
+        habitCRUD = HabitCRUD.getInstance(this);
 
         ArrayList<IData> habits =  habitCRUD.selectAllData();
 
@@ -101,7 +108,7 @@ public class MainActivity extends Activity {
 
         TextView habitNameTextView = (TextView) view.findViewById(R.id.habit_card_habit_name);
 
-        Habit habit = new Habit(habitNameTextView.getText().toString(), Integer.parseInt(habitNameTextView.getTag().toString()));
+        Habit habit = new Habit(Integer.parseInt(habitNameTextView.getTag().toString()), habitNameTextView.getText().toString());
 
         Intent intent = new Intent(this, HabitActivity.class);
 
