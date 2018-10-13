@@ -1,4 +1,4 @@
-package padev.badhabits.Data;
+package padev.badhabits.Data.CRUD;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+
+import padev.badhabits.Data.AbstractData;
+import padev.badhabits.Data.Habit;
+import padev.badhabits.Data.IDataAccessObject;
 
 public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject, CRUDSingleton {
 
@@ -37,7 +41,7 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject, CR
     }
 
     @Override
-    public void insertData(IData data) {
+    public void insertData(AbstractData data) {
 
         Habit habit = (Habit) data;
 
@@ -51,7 +55,7 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject, CR
     }
 
     @Override
-    public IData selectData(int id) {
+    public AbstractData selectData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_HABITS, new String[] { KEY_ID,
@@ -68,9 +72,9 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject, CR
     }
 
     @Override
-    public ArrayList<IData> selectAllData() {
+    public ArrayList<AbstractData> selectAllData() {
 
-        ArrayList<IData> habits = new ArrayList<>();
+        ArrayList<AbstractData> habits = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + TABLE_HABITS;
 
@@ -88,7 +92,7 @@ public class HabitCRUD extends SQLiteOpenHelper implements IDataAccessObject, CR
     }
 
     @Override
-    public int updateData(IData data) {
+    public int updateData(AbstractData data) {
         Habit habit = (Habit) data;
 
         SQLiteDatabase db = this.getWritableDatabase();

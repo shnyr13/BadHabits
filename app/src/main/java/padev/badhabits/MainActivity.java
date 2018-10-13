@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import padev.badhabits.Data.Habit;
-import padev.badhabits.Data.HabitCRUD;
-import padev.badhabits.Data.IData;
+import padev.badhabits.Data.CRUD.HabitCRUD;
+import padev.badhabits.Data.AbstractData;
 
 public class MainActivity extends Activity {
 
@@ -37,9 +37,9 @@ public class MainActivity extends Activity {
         // HabitCRUD is Singleton
         habitCRUD = HabitCRUD.getInstance(this);
 
-        ArrayList<IData> habits =  habitCRUD.selectAllData();
+        ArrayList<AbstractData> habits =  habitCRUD.selectAllData();
 
-        for (IData data: habits) {
+        for (AbstractData data: habits) {
 
             Habit habit = (Habit) data;
             createHabitCard(habit);

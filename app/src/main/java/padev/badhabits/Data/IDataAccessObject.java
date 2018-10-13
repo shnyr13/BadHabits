@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public interface IDataAccessObject {
 
-    void insertData(IData data);
+    void insertData(AbstractData data);
 
-    IData selectData(int id);
+    AbstractData selectData(int id);
 
-    ArrayList<IData> selectAllData();
+    ArrayList<AbstractData> selectAllData();
 
-    int updateData(IData data);
+    int updateData(AbstractData data);
 
     void deleteData(int id);
 

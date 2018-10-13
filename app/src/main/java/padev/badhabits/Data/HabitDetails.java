@@ -1,10 +1,7 @@
 package padev.badhabits.Data;
 
-import java.util.Date;
+public class HabitDetails extends AbstractData {
 
-public class HabitDetails implements IData  {
-
-    protected long id;
     protected long habitId;
     protected int dose;
     protected int concentration;
@@ -26,10 +23,6 @@ public class HabitDetails implements IData  {
         this.weight = weight;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public long getHabitId() { return habitId; }
 
     public float getDose() {
@@ -42,10 +35,6 @@ public class HabitDetails implements IData  {
 
     public float getWeight() {
         return weight;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setDose(int dose) {

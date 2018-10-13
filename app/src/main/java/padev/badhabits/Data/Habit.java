@@ -1,8 +1,7 @@
 package padev.badhabits.Data;
 
-public class Habit implements IData {
+public class Habit extends AbstractData {
 
-    protected long id;
     protected String name;
 
     public Habit(long id, String name) {
@@ -16,13 +15,5 @@ public class Habit implements IData {
 
     public String getName() {
         return name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

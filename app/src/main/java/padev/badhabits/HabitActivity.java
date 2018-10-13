@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,8 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import padev.badhabits.Data.Habit;
 import padev.badhabits.Data.HabitDetails;
-import padev.badhabits.Data.HabitDetailsCRUD;
-import padev.badhabits.Data.IData;
+import padev.badhabits.Data.CRUD.HabitDetailsCRUD;
+import padev.badhabits.Data.AbstractData;
 import padev.badhabits.Utils.KeyboardsUtils;
 
 public class HabitActivity extends AppCompatActivity {
@@ -56,14 +55,14 @@ public class HabitActivity extends AppCompatActivity {
         // HabitDetailsCRUD is Singleton
         habitDetailsCRUD = HabitDetailsCRUD.getInstance(this);
 
-        ArrayList<IData> habitsDetails =  habitDetailsCRUD.selectDataByHabitId(habit.getId());
+        ArrayList<AbstractData> habitsDetails =  habitDetailsCRUD.selectDataByHabitId(habit.getId());
 
         doseArr = new DataPoint[habitsDetails.size()];
         concentrationArr = new DataPoint[habitsDetails.size()];
         weightArr = new DataPoint[habitsDetails.size()];
 
         int i = 1;
-        for (IData data: habitsDetails) {
+        for (AbstractData data: habitsDetails) {
 
             doseArr[i - 1] = new DataPoint(i, ((HabitDetails) data).getDose());
             concentrationArr[i - 1] = new DataPoint(i, ((HabitDetails) data).getConcentration());

@@ -1,4 +1,4 @@
-package padev.badhabits.Data;
+package padev.badhabits.Data.CRUD;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+
+import padev.badhabits.Data.AbstractData;
+import padev.badhabits.Data.HabitDetails;
+import padev.badhabits.Data.IDataAccessObject;
 
 public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObject, CRUDSingleton {
 
@@ -44,7 +48,7 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
     }
 
     @Override
-    public void insertData(IData data) {
+    public void insertData(AbstractData data) {
 
         HabitDetails habitDetails = (HabitDetails) data;
 
@@ -61,7 +65,7 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
     }
 
     @Override
-    public IData selectData(int id) {
+    public AbstractData selectData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_HABITS_DETAILS, new String[] { KEY_ID,
@@ -77,9 +81,9 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
         return new HabitDetails(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)));
     }
 
-    public ArrayList<IData> selectDataByHabitId(long habitId) {
+    public ArrayList<AbstractData> selectDataByHabitId(long habitId) {
 
-        ArrayList<IData> habitDetails = new ArrayList<>();
+        ArrayList<AbstractData> habitDetails = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -96,14 +100,14 @@ public class HabitDetailsCRUD extends SQLiteOpenHelper implements IDataAccessObj
     }
 
     @Override
-    public ArrayList<IData> selectAllData() {
+    public ArrayList<AbstractData> selectAllData() {
 
         // TODO if you want to
         return new ArrayList<>();
     }
 
     @Override
-    public int updateData(IData data) {
+    public int updateData(AbstractData data) {
         HabitDetails habitDetails = (HabitDetails) data;
 
         SQLiteDatabase db = this.getWritableDatabase();

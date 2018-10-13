@@ -1,4 +1,4 @@
-package padev.badhabits.Data;
+package padev.badhabits.Data.CRUD;
 
 public interface CRUDSingleton {
 
