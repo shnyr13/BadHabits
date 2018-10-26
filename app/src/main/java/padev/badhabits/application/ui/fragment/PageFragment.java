@@ -1,4 +1,4 @@
-package padev.badhabits;
+package padev.badhabits.application.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import padev.badhabits.R;
+import padev.badhabits.application.ui.activity.HabitActivity;
 
 public class PageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";

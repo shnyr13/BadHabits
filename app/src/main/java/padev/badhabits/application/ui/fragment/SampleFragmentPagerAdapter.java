@@ -1,4 +1,4 @@
-package padev.badhabits;
+package padev.badhabits.application.ui.fragment;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

@@ -1,6 +1,5 @@
-package padev.badhabits;
+package padev.badhabits.application.ui.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,17 +9,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.facebook.stetho.Stetho;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import padev.badhabits.Data.Habit;
-import padev.badhabits.Data.CRUD.HabitCRUD;
 import padev.badhabits.Data.AbstractData;
+import padev.badhabits.Data.CRUD.HabitCRUD;
+import padev.badhabits.Data.Habit;
+import padev.badhabits.R;
+import padev.badhabits.application.mvp.presenter.home.HomePresenter;
+import padev.badhabits.application.mvp.view.IHomeView;
+import padev.badhabits.core.view.BaseActivity;
 
-public class MainActivity extends Activity {
+public class HomeActivity extends BaseActivity implements IHomeView {
+
+    @InjectPresenter
+    HomePresenter mHomePresenter;
 
     private HabitCRUD habitCRUD;
 

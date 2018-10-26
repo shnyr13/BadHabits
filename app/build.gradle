@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "padev.badhabits"
         minSdkVersion 21
@@ -38,10 +38,11 @@ dependencies {
     //apt 'com.jakewharton:butterknife-compiler:8.8.1'
 
     //Moxy
-    /*implementation 'com.arello-mobile:moxy:1.5.3'
-    implementation 'com.arello-mobile:moxy-android:1.5.3'
-    implementation 'com.arello-mobile:moxy-app-compat:1.5.3'
-    kapt 'com.arello-mobile:moxy-compiler:1.5.3'*/
+    implementation 'com.arello-mobile:moxy:1.5.5'
+    annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.5'
+    implementation 'com.arello-mobile:moxy-android:1.5.5'
+    implementation 'com.arello-mobile:moxy-app-compat:1.5.5'
+    implementation 'com.android.support:appcompat-v7'
 
     implementation 'com.jjoe64:graphview:4.2.2'
 

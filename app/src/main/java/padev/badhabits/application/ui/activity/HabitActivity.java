@@ -1,4 +1,4 @@
-package padev.badhabits;
+package padev.badhabits.application.ui.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.jjoe64.graphview.series.DataPoint;
 
 import java.util.ArrayList;
@@ -20,9 +21,17 @@ import padev.badhabits.Data.Habit;
 import padev.badhabits.Data.HabitDetails;
 import padev.badhabits.Data.CRUD.HabitDetailsCRUD;
 import padev.badhabits.Data.AbstractData;
+import padev.badhabits.R;
+import padev.badhabits.application.mvp.presenter.habit.HabitPresenter;
+import padev.badhabits.application.mvp.view.IHabitView;
+import padev.badhabits.application.ui.fragment.SampleFragmentPagerAdapter;
 import padev.badhabits.Utils.KeyboardsUtils;
+import padev.badhabits.core.view.BaseActivity;
 
-public class HabitActivity extends AppCompatActivity {
+public class HabitActivity extends BaseActivity implements IHabitView {
+
+    @InjectPresenter
+    HabitPresenter mHabitPresenter;
 
     private Habit habit;
     private HabitDetailsCRUD habitDetailsCRUD;
