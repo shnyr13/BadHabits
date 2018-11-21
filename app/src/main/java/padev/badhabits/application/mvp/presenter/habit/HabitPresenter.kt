@@ -6,5 +6,5 @@ import com.arellomobile.mvp.MvpPresenter;
 import padev.badhabits.application.mvp.view.IHabitView;
 
 @InjectViewState
-public class HabitPresenter extends MvpPresenter<IHabitView> implements IHabitPresenter {
-}
+class HabitPresenter: MvpPresenter<IHabitView>(), IHabitPresenter {
+}                                                           

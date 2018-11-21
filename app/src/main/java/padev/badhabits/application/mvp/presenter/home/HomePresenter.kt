@@ -6,6 +6,6 @@ import com.arellomobile.mvp.MvpPresenter;
 import padev.badhabits.application.mvp.view.IHomeView;
 
 @InjectViewState
-public class HomePresenter extends MvpPresenter<IHomeView> implements IHomePresenter {
+class HomePresenter: MvpPresenter<IHomeView>(), IHomePresenter {
 
 }

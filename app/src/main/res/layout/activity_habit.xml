@@ -63,7 +63,8 @@
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             android:src="@drawable/ic_add_black_24dp"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:onClick="addHabitClicked"/>
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

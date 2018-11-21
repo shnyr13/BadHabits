@@ -40,7 +40,7 @@ public class PageFragment extends Fragment {
         GraphView graphView = (GraphView) view;
 
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(((HabitActivity)getActivity()).GetPoints());
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(((HabitActivity)getActivity()).getPoints());
 
         graphView.addSeries(series);
         return view;
