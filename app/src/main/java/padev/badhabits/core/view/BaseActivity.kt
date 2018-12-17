@@ -1,7 +1,17 @@
-package padev.badhabits.core.view;
+package padev.badhabits.core.view
 
-import com.arellomobile.mvp.MvpAppCompatActivity;
+import android.os.Bundle
+import butterknife.ButterKnife
+import com.arellomobile.mvp.MvpAppCompatActivity
 
-open class BaseActivity: MvpAppCompatActivity() {
+abstract class BaseActivity: MvpAppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        ButterKnife.bind(this)
+
+    }
 
 }

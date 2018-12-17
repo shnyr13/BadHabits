@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -44,14 +45,20 @@ class HabitActivity: BaseActivity(), IHabitView {
 
         setContentView(R.layout.activity_habit)
 
-        ButterKnife.bind(this)
-
         habitDetailsCRUD = HabitDetailsCRUD(this)
 
-        habit = Habit(intent.getStringExtra("habit_id").toLong(), intent.getStringExtra("habit_name"))
+        val hid = intent.getStringExtra("habit_id")
+        val hname = intent.getStringExtra("habit_name")
 
-        val habitNameTextView = findViewById<TextView>(R.id.activity_habit_habit_name)
-        habitNameTextView.text = habit.name
+        habit = Habit(hid.toLong(), hname)
+
+        val toolbar = findViewById<Toolbar>(R.id.activity_habit_appbar_toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        supportActionBar?.title = habit.name
 
         viewPager = findViewById(R.id.activity_habit_view_pager)
         viewPager.adapter = SampleFragmentPagerAdapter(supportFragmentManager, this)

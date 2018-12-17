@@ -7,4 +7,5 @@ import padev.badhabits.application.mvp.view.IHabitView;
 
 @InjectViewState
 class HabitPresenter: MvpPresenter<IHabitView>(), IHabitPresenter {
+    
 }                                                           
