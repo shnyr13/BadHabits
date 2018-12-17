@@ -1,4 +1,13 @@
 <resources>
+
     <string name="app_name">Вредные привычки</string>
+
     <string name="default_habit">Привычка</string>
+
+    <string name="action_settings">Настройки</string>
+    <string name="drawer_item_home">Домой</string>
+    <string name="drawer_item_settings">Настройки 2</string>
+    <string name="drawer_item_help">Помощь</string>
+    <string name="drawer_item_contact">Контакты</string>
+
 </resources>

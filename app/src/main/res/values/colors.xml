@@ -7,4 +7,19 @@
     <color name="colorTextLight">#ffffff</color>
 
     <color name="colorTextDark">#000000</color>
+
+
+    <color name="material_drawer_primary_dark">#dd2c00</color>
+    <color name="material_drawer_primary_light">#dd2c00</color>
+    <color name="material_drawer_accent">#dd2c00</color>
+
+    <color name="material_drawer_background">#ffffff</color>
+    <color name="material_drawer_icons">#dd2c00</color>
+    <color name="material_drawer_primary_text">#dd2c00</color>
+    <color name="material_drawer_secondary_text">#dd2c00</color>
+    <color name="material_drawer_selected_text">#dd2c00</color>
+    <color name="material_drawer_hint_text">#dd2c00</color>
+    <color name="material_drawer_contrast_text">#dd2c00</color>
+    <color name="material_drawer_divider">#11dd2c00</color>
+    <color name="material_drawer_selected">#11dd2c00</color>
 </resources>

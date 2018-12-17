@@ -32,9 +32,9 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_weight="0.15"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_done_black_24dp" />
+                    android:src="@drawable/header" />
 
                     <TextView
                         android:id="@+id/fragment_habit_card_name"
@@ -43,8 +43,7 @@
                         android:layout_weight="0.85"
                         android:layout_gravity="center"
                         android:textSize="20sp"
-                        android:textColor="@color/colorTextDark"
-                        android:text="Привычка" />
+                        android:textColor="@color/colorTextDark" />
 
             </LinearLayout>
 

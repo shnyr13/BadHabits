@@ -22,6 +22,14 @@ import padev.badhabits.application.mvp.presenter.home.HomePresenter
 import padev.badhabits.application.mvp.view.IHomeView
 import padev.badhabits.application.ui.fragment.HabitCardFragment
 import padev.badhabits.core.view.BaseActivity
+import com.mikepenz.iconics.typeface.FontAwesome
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
+import com.mikepenz.materialdrawer.model.SectionDrawerItem
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.mikepenz.materialdrawer.Drawer
+
+
 
 class HomeActivity: BaseActivity(), IHomeView {
 
@@ -43,8 +51,21 @@ class HomeActivity: BaseActivity(), IHomeView {
 
         val toolbar = findViewById<Toolbar>(R.id.activity_home_appbar_toolbar)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         supportActionBar?.title = getString(R.string.app_name)
+
+        Drawer()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggle(true)
+                .withHeader(R.layout.drawer_header)
+                .addDrawerItems(
+                        PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
+                        SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
+                        SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
+                )
+                .build()
 
         // for SQLite view
         Stetho.initializeWithDefaults(this)
@@ -81,6 +102,8 @@ class HomeActivity: BaseActivity(), IHomeView {
 
             val habit = Habit(hNameStr)
 
+            // TODO presenter.addHabit(...)
+
             habitCRUD.insertData(habit)
 
             createHabitCard(habit)
@@ -99,7 +122,7 @@ class HomeActivity: BaseActivity(), IHomeView {
     @SuppressLint("InflateParams")
     @OnClick(R.id.activity_home_fab)
     fun addHabitClicked(view: View) {
-
+        // TODO:
         // mHomePresenter.habitAddStart()
 
        showAddHabitDialog()
