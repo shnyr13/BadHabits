@@ -25,6 +25,34 @@
                 android:value=".application.ui.activity.HomeActivity" />
 
         </activity>
+
+        <activity android:name=".application.ui.activity.NotificationListActivity"
+            android:theme="@style/BadHabitThemeNoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.ui.activity.HomeActivity" />
+
+        </activity>
+
+        <activity android:name=".application.ui.activity.SettingsActivity"
+            android:theme="@style/BadHabitThemeNoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.ui.activity.HomeActivity" />
+
+        </activity>
+
+        <activity android:name=".application.ui.activity.AboutActivity"
+            android:theme="@style/BadHabitThemeNoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.ui.activity.HomeActivity" />
+
+        </activity>
+
     </application>
 
 </manifest>

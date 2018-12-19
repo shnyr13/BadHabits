@@ -9,9 +9,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import butterknife.BindView
-import butterknife.ButterKnife
 import butterknife.OnClick
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.facebook.stetho.Stetho
@@ -24,17 +22,17 @@ import padev.badhabits.application.ui.fragment.HabitCardFragment
 import padev.badhabits.core.view.BaseActivity
 import com.mikepenz.iconics.typeface.FontAwesome
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
-import com.mikepenz.materialdrawer.model.DividerDrawerItem
-import com.mikepenz.materialdrawer.model.SectionDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.Drawer
-
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
 
 
 class HomeActivity: BaseActivity(), IHomeView {
 
     @InjectPresenter
     lateinit var  mHomePresenter: HomePresenter
+
+    lateinit var mDrawerResult: Drawer.Result
 
     private val TAG = HomeActivity::class.java.simpleName
 
@@ -55,16 +53,36 @@ class HomeActivity: BaseActivity(), IHomeView {
 
         supportActionBar?.title = getString(R.string.app_name)
 
-        Drawer()
+        mDrawerResult =  Drawer()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
                 .withHeader(R.layout.drawer_header)
                 .addDrawerItems(
-                        PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
-                        SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                        SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
-                )
+                        PrimaryDrawerItem().withName(R.string.drawer_item_notification).withIcon(FontAwesome.Icon.faw_envelope).withBadge("1").withIdentifier(1).withIdentifier(1),
+                        SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(2),
+                        SecondaryDrawerItem().withName(R.string.drawer_item_about).withIcon(FontAwesome.Icon.faw_user).withIdentifier(3),
+                        DividerDrawerItem(),
+                        SecondaryDrawerItem().withName(R.string.drawer_item_exit).withIcon(FontAwesome.Icon.faw_power_off).withIdentifier(4)
+                ).withOnDrawerItemClickListener { parent, view, position, id, drawerItem ->
+
+                    when(id) {
+
+                        0.toLong() -> startActivity(Intent(this, NotificationListActivity::class.java))
+
+                        1.toLong() -> startActivity(Intent(this, SettingsActivity::class.java))
+
+                        2.toLong() -> startActivity(Intent(this, AboutActivity::class.java))
+
+                        4.toLong() -> {
+                            moveTaskToBack(true)
+                            android.os.Process.killProcess(android.os.Process.myPid())
+                            System.exit(1)
+                        }
+                    }
+
+                }
+
                 .build()
 
         // for SQLite view
@@ -81,6 +99,15 @@ class HomeActivity: BaseActivity(), IHomeView {
 
             val habit = data as Habit
             createHabitCard(habit)
+        }
+    }
+
+    override fun onBackPressed() {
+
+        if (mDrawerResult.isDrawerOpen) {
+            mDrawerResult.closeDrawer()
+        } else {
+            super.onBackPressed()
         }
     }
 

@@ -1,13 +1,15 @@
 <resources>
 
     <string name="app_name">Вредные привычки</string>
+    <string name="notifications">Уведомления</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О приложении</string>
 
     <string name="default_habit">Привычка</string>
 
-    <string name="action_settings">Настройки</string>
-    <string name="drawer_item_home">Домой</string>
-    <string name="drawer_item_settings">Настройки 2</string>
-    <string name="drawer_item_help">Помощь</string>
-    <string name="drawer_item_contact">Контакты</string>
+    <string name="drawer_item_notification">Уведомления</string>
+    <string name="drawer_item_help">Настройки</string>
+    <string name="drawer_item_about">О приложении</string>
+    <string name="drawer_item_exit">Выход</string>
 
 </resources>
