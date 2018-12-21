@@ -1,16 +1,13 @@
-package padev.badhabits.Data.CRUD;
+package padev.badhabits.Data.CRUD
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import java.util.ArrayList;
-
-import padev.badhabits.Data.AbstractData;
-import padev.badhabits.Data.Habit;
-import padev.badhabits.Data.IDataAccessObject;
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import padev.badhabits.Data.AbstractData
+import padev.badhabits.Data.Habit
+import padev.badhabits.Data.IDataAccessObject
+import java.util.*
 
 class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db", null, 1), IDataAccessObject {
 
@@ -56,7 +53,7 @@ class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db
 
         cursor?.moveToFirst()
 
-        return Habit(cursor.getString(0).toLong(), cursor.getString(1))
+        return Habit(cursor.getString(0).toLong(), cursor.getString(1), false, false, false)
     }
 
     override fun selectAllData(): ArrayList<AbstractData> {
@@ -70,7 +67,7 @@ class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db
 
         if (cursor.moveToFirst()) {
             do {
-                val habit = Habit(cursor.getString(0).toLong(), cursor.getString(1))
+                val habit = Habit(cursor.getString(0).toLong(), cursor.getString(1), false, false, false)
                 habits.add(habit)
             } while (cursor.moveToNext())
         }

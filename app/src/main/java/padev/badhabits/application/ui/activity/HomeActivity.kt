@@ -8,11 +8,18 @@ import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.OnClick
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.facebook.stetho.Stetho
+import com.mikepenz.iconics.typeface.FontAwesome
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import padev.badhabits.Data.CRUD.HabitCRUD
 import padev.badhabits.Data.Habit
 import padev.badhabits.R
@@ -20,17 +27,12 @@ import padev.badhabits.application.mvp.presenter.home.HomePresenter
 import padev.badhabits.application.mvp.view.IHomeView
 import padev.badhabits.application.ui.fragment.HabitCardFragment
 import padev.badhabits.core.view.BaseActivity
-import com.mikepenz.iconics.typeface.FontAwesome
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
-import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.model.DividerDrawerItem
 
 
 class HomeActivity: BaseActivity(), IHomeView {
 
     @InjectPresenter
-    lateinit var  mHomePresenter: HomePresenter
+    lateinit var  presenter: HomePresenter
 
     lateinit var mDrawerResult: Drawer.Result
 
@@ -111,23 +113,34 @@ class HomeActivity: BaseActivity(), IHomeView {
         }
     }
 
+    override fun showLoading() {
+
+        findViewById<ProgressBar>(R.id.activity_home_progress_bar)?.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+
+        findViewById<ProgressBar>(R.id.activity_home_progress_bar)?.visibility = View.GONE
+    }
+
     override fun showAddHabitDialog() {
 
-        val promptsView = layoutInflater.inflate(R.layout.activity_main_input_alert, null)
+        val promptsView = layoutInflater.inflate(R.layout.input_alert_add_habit, null)
 
         val alertDialogBuilder = AlertDialog.Builder(this)
 
         alertDialogBuilder.setView(promptsView)
 
-        val habitName = promptsView.findViewById<EditText>(R.id.habit_name_input_alert_habit_name_edit_text)
+        val habitNameEditText = promptsView.findViewById<EditText>(R.id.input_alert_add_habit_name)
+        val timeCheckBox = promptsView.findViewById<CheckBox>(R.id.input_alert_add_habit_time)
+        val moneyCheckBox = promptsView.findViewById<CheckBox>(R.id.input_alert_add_habit_money)
+        val healthCheckBox = promptsView.findViewById<CheckBox>(R.id.input_alert_add_habit_health)
 
         alertDialogBuilder.setCancelable(false)
 
         alertDialogBuilder.setPositiveButton("Добавить") { _: DialogInterface, _: Int ->
 
-            val hNameStr = habitName.text.toString()
-
-            val habit = Habit(hNameStr)
+            val habit = Habit(habitNameEditText.text.toString(), timeCheckBox.isChecked, moneyCheckBox.isChecked, healthCheckBox.isChecked)
 
             // TODO presenter.addHabit(...)
 

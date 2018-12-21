@@ -1,6 +1,10 @@
 <resources>
 
     <string name="app_name">Вредные привычки</string>
+    <string name="dev_name">PADev.PRO</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+
     <string name="notifications">Уведомления</string>
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
@@ -11,5 +15,10 @@
     <string name="drawer_item_help">Настройки</string>
     <string name="drawer_item_about">О приложении</string>
     <string name="drawer_item_exit">Выход</string>
+    
+    <string name="habit_name">Название привычки</string>
+    <string name="habit_danger_time">Время</string>
+    <string name="habit_danger_money">Деньги</string>
+    <string name="habit_danger_health">Здоровье</string>
 
 </resources>

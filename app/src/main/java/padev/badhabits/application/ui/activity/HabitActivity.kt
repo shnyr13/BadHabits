@@ -7,9 +7,6 @@ import android.support.v4.view.ViewPager
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import butterknife.OnClick
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jjoe64.graphview.series.DataPoint
@@ -17,7 +14,7 @@ import padev.badhabits.Data.CRUD.HabitDetailsCRUD
 import padev.badhabits.Data.Habit
 import padev.badhabits.Data.HabitDetails
 import padev.badhabits.R
-import padev.badhabits.Utils.KeyboardsUtils
+import padev.badhabits.application.common.utils.KeyboardsUtils
 import padev.badhabits.application.mvp.presenter.habit.HabitPresenter
 import padev.badhabits.application.mvp.view.IHabitView
 import padev.badhabits.application.ui.fragment.SampleFragmentPagerAdapter
@@ -26,7 +23,7 @@ import padev.badhabits.core.view.BaseActivity
 class HabitActivity: BaseActivity(), IHabitView {
 
     @InjectPresenter
-    lateinit var mHabitPresenter: HabitPresenter
+    lateinit var presenter: HabitPresenter
 
     private lateinit var habit: Habit
 
@@ -50,7 +47,7 @@ class HabitActivity: BaseActivity(), IHabitView {
         val hid = intent.getStringExtra("habit_id")
         val hname = intent.getStringExtra("habit_name")
 
-        habit = Habit(hid.toLong(), hname)
+        habit = Habit(hid.toLong(), hname, false, false, false)
 
         val toolbar = findViewById<Toolbar>(R.id.activity_habit_appbar_toolbar)
         setSupportActionBar(toolbar)
@@ -120,7 +117,15 @@ class HabitActivity: BaseActivity(), IHabitView {
         alertDialog.show()
 
         // TODO (not working)
-        KeyboardsUtils.showSoftKeyboard(doseEditText, this)
+        KeyboardsUtils.showSoftKeyboard(doseEditText, this@HabitActivity)
+    }
+
+    override fun showLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun getPoints(): Array<DataPoint> {

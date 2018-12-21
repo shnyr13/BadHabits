@@ -11,7 +11,6 @@ abstract class BaseActivity: MvpAppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         ButterKnife.bind(this)
-
     }
 
 }

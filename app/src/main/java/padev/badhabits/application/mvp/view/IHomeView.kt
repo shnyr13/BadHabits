@@ -8,4 +8,8 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface IHomeView: MvpView {
 
     fun showAddHabitDialog()
+
+    fun showLoading()
+
+    fun hideLoading()
 }

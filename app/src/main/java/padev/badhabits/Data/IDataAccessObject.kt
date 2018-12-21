@@ -1,8 +1,8 @@
-package padev.badhabits.Data;
+package padev.badhabits.Data
 
-import java.util.ArrayList;
+import java.util.ArrayList
 
-public interface IDataAccessObject {
+interface IDataAccessObject {
 
     fun insertData(data: AbstractData)
 
