@@ -14,11 +14,11 @@ class HomePresenter: MvpPresenter<IHomeView>(), IHomePresenter {
     }
 
     override fun habitAddPositive(name: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") //To change body of created functions use File | SettingsEntity | File Templates.
     }
 
     override fun habitAddNegative() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") //To change body of created functions use File | SettingsEntity | File Templates.
     }
 
     override fun onFirstViewAttach() {

@@ -1,19 +1,15 @@
-package padev.badhabits.Data.CRUD;
+package padev.badhabits.application.mvp.model.crud;
 
 import android.annotation.SuppressLint
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 
-import java.util.ArrayList;
+import java.util.ArrayList
+import padev.badhabits.application.mvp.model.entity.HabitDetailsEntity
 
-import padev.badhabits.Data.AbstractData;
-import padev.badhabits.Data.HabitDetails;
-import padev.badhabits.Data.IDataAccessObject;
-
-class HabitDetailsCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db", null, 1), IDataAccessObject {
+class HabitDetailsCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db", null, 1) {
 
 /*
     private val DATABASE_VERSION = 1
@@ -43,24 +39,22 @@ class HabitDetailsCRUD(context: Context): SQLiteOpenHelper(context, "padev.badha
         onCreate(db)
     }
 
-    override fun insertData(data: AbstractData) {
-
-        val habitDetails = data as HabitDetails
+    fun insertData(habitDetailsEntity: HabitDetailsEntity) {
 
         val db = this.writableDatabase
         val values = ContentValues()
-        values.put(KEY_HABIT_ID, habitDetails.habitId)
-        values.put(KEY_DOSE, habitDetails.dose)
-        values.put(KEY_CONCENTRATION, habitDetails.concentration)
-        values.put(KEY_WEIGHT, habitDetails.weight)
+        values.put(KEY_HABIT_ID, habitDetailsEntity.habitId)
+        values.put(KEY_DOSE, habitDetailsEntity.dose)
+        values.put(KEY_CONCENTRATION, habitDetailsEntity.concentration)
+        values.put(KEY_WEIGHT, habitDetailsEntity.weight)
 
-        habitDetails.id = db.insert(TABLE_HABITS_DETAILS, null, values)
+        habitDetailsEntity.id = db.insert(TABLE_HABITS_DETAILS, null, values)
 
         db.close()
     }
 
     @SuppressLint("Recycle")
-    override fun selectData(id: Int): AbstractData {
+    fun selectData(id: Int): HabitDetailsEntity {
         val db = this.readableDatabase
 
         val cursor = db.query(TABLE_HABITS_DETAILS, arrayOf(KEY_ID,
@@ -69,15 +63,17 @@ class HabitDetailsCRUD(context: Context): SQLiteOpenHelper(context, "padev.badha
 
         cursor?.moveToFirst()
 
-        return HabitDetails(cursor.getString(0).toLong(),
-                cursor.getString(1).toInt(),
+        return HabitDetailsEntity(
+                cursor.getString(0).toLong(),
+                cursor.getString(1).toLong(),
                 cursor.getString(2).toInt(),
-                cursor.getString(3).toInt())
+                cursor.getString(3).toInt(),
+                cursor.getString(4).toInt())
     }
 
-    fun selectDataByHabitId(habitId: Long): ArrayList<AbstractData>  {
+    fun selectDataByHabitId(habitId: Long): ArrayList<HabitDetailsEntity>  {
 
-        val habitDetails = ArrayList<AbstractData>()
+        val habitDetails = ArrayList<HabitDetailsEntity>()
 
         val db = this.readableDatabase
 
@@ -85,7 +81,7 @@ class HabitDetailsCRUD(context: Context): SQLiteOpenHelper(context, "padev.badha
 
         if (cursor.moveToFirst()) {
             do {
-                val habitDetail = HabitDetails(
+                val habitDetail = HabitDetailsEntity(
                         cursor.getString(0).toLong(),
                         cursor.getString(1).toLong(),
                         cursor.getString(2).toInt(),
@@ -98,33 +94,34 @@ class HabitDetailsCRUD(context: Context): SQLiteOpenHelper(context, "padev.badha
         return habitDetails
     }
 
-    override fun selectAllData(): ArrayList<AbstractData> {
+    fun selectAllData(): ArrayList<HabitDetailsEntity> {
 
         // TODO if you want to
         return ArrayList()
     }
 
-    override fun updateData(data: AbstractData): Int {
-        val habitDetails = data as HabitDetails
+    fun updateData(habitDetailsEntity: HabitDetailsEntity): Int {
 
         val db = this.writableDatabase
 
         val values = ContentValues()
-        values.put(KEY_DOSE, habitDetails.dose)
-        values.put(KEY_CONCENTRATION, habitDetails.concentration)
-        values.put(KEY_WEIGHT, habitDetails.weight)
+        values.put(KEY_DOSE, habitDetailsEntity.dose)
+        values.put(KEY_CONCENTRATION, habitDetailsEntity.concentration)
+        values.put(KEY_WEIGHT, habitDetailsEntity.weight)
 
         return db.update(TABLE_HABITS_DETAILS, values, "$KEY_ID = ?",
-                arrayOf(habitDetails.id.toString()))
+                arrayOf(habitDetailsEntity.id.toString()))
     }
 
-    override fun deleteData(id: Int) {
+    fun deleteData(id: Long) {
+
         val db = this.writableDatabase;
         db.delete(TABLE_HABITS_DETAILS, "$KEY_ID = ?", arrayOf(id.toString()))
         db.close()
     }
 
-    override fun deleteAllData() {
+    fun deleteAllData() {
+
         val db = this.writableDatabase
         db.delete(TABLE_HABITS_DETAILS, null, null)
         db.close()

@@ -27,10 +27,10 @@ class NotificationListActivity: BaseActivity(), INotificationListView {
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") //To change body of created functions use File | SettingsEntity | File Templates.
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") //To change body of created functions use File | SettingsEntity | File Templates.
     }
 }

@@ -1,4 +1,6 @@
 package padev.badhabits.application.mvp.model.interactor.notification_list
 
-class NotificationListInteractor {
+import padev.badhabits.core.interactor.BaseInteractor
+
+class NotificationListInteractor: BaseInteractor(), INotificationListInteractor {
 }

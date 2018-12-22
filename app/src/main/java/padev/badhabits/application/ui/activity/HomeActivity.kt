@@ -20,8 +20,8 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
-import padev.badhabits.Data.CRUD.HabitCRUD
-import padev.badhabits.Data.Habit
+import padev.badhabits.application.mvp.model.crud.HabitCRUD
+import padev.badhabits.application.mvp.model.entity.HabitEntity
 import padev.badhabits.R
 import padev.badhabits.application.mvp.presenter.home.HomePresenter
 import padev.badhabits.application.mvp.view.IHomeView
@@ -99,7 +99,7 @@ class HomeActivity: BaseActivity(), IHomeView {
 
         for (data in habits) {
 
-            val habit = data as Habit
+            val habit = data as HabitEntity
             createHabitCard(habit)
         }
     }
@@ -140,7 +140,7 @@ class HomeActivity: BaseActivity(), IHomeView {
 
         alertDialogBuilder.setPositiveButton("Добавить") { _: DialogInterface, _: Int ->
 
-            val habit = Habit(habitNameEditText.text.toString(), timeCheckBox.isChecked, moneyCheckBox.isChecked, healthCheckBox.isChecked)
+            val habit = HabitEntity((-1).toLong(), habitNameEditText.text.toString(), timeCheckBox.isChecked, moneyCheckBox.isChecked, healthCheckBox.isChecked)
 
             // TODO presenter.addHabit(...)
 
@@ -169,11 +169,11 @@ class HomeActivity: BaseActivity(), IHomeView {
 
     }
 
-    private fun createHabitCard(habit: Habit) {
+    private fun createHabitCard(habitEntity: padev.badhabits.application.mvp.model.entity.HabitEntity) {
 
         val habitCardFragment = HabitCardFragment()
 
-        habitCardFragment.mHabit = habit
+        habitCardFragment.mHabitEntity = habitEntity
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.activity_home_content, habitCardFragment)

@@ -10,9 +10,9 @@ import android.widget.EditText
 import butterknife.OnClick
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jjoe64.graphview.series.DataPoint
-import padev.badhabits.Data.CRUD.HabitDetailsCRUD
-import padev.badhabits.Data.Habit
-import padev.badhabits.Data.HabitDetails
+import padev.badhabits.application.mvp.model.crud.HabitDetailsCRUD
+import padev.badhabits.application.mvp.model.entity.HabitEntity
+import padev.badhabits.application.mvp.model.entity.HabitDetailsEntity
 import padev.badhabits.R
 import padev.badhabits.application.common.utils.KeyboardsUtils
 import padev.badhabits.application.mvp.presenter.habit.HabitPresenter
@@ -25,7 +25,7 @@ class HabitActivity: BaseActivity(), IHabitView {
     @InjectPresenter
     lateinit var presenter: HabitPresenter
 
-    private lateinit var habit: Habit
+    private lateinit var habit: HabitEntity
 
     private lateinit var habitDetailsCRUD: HabitDetailsCRUD
 
@@ -47,7 +47,7 @@ class HabitActivity: BaseActivity(), IHabitView {
         val hid = intent.getStringExtra("habit_id")
         val hname = intent.getStringExtra("habit_name")
 
-        habit = Habit(hid.toLong(), hname, false, false, false)
+        habit = HabitEntity(hid.toLong(), hname, false, false, false)
 
         val toolbar = findViewById<Toolbar>(R.id.activity_habit_appbar_toolbar)
         setSupportActionBar(toolbar)
@@ -68,7 +68,7 @@ class HabitActivity: BaseActivity(), IHabitView {
         var i = 1
         for (data in habitsDetails) {
 
-            doseArr.add(DataPoint(i.toDouble(), (data as HabitDetails).dose.toDouble()))
+            doseArr.add(DataPoint(i.toDouble(), (data as HabitDetailsEntity).dose.toDouble()))
             concentrationArr.add(DataPoint(i.toDouble(), data.concentration.toDouble()))
             weightArr.add(DataPoint(i.toDouble(), data.weight.toDouble()))
 
@@ -105,7 +105,7 @@ class HabitActivity: BaseActivity(), IHabitView {
                 val concentration = Integer.parseInt(concentrationEditText.text.toString())
                 val weight = Integer.parseInt(weightEditText.text.toString())
 
-                val habitDetails = HabitDetails(habitId, dose, concentration, weight)
+                val habitDetails = HabitDetailsEntity((-1).toLong(), habitId, dose, concentration, weight)
 
                 habitDetailsCRUD.insertData(habitDetails)
             }
@@ -121,11 +121,11 @@ class HabitActivity: BaseActivity(), IHabitView {
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") //To change body of created functions use File | SettingsEntity | File Templates.
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") //To change body of created functions use File | SettingsEntity | File Templates.
     }
 
     fun getPoints(): Array<DataPoint> {

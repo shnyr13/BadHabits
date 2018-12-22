@@ -1,4 +1,6 @@
 package padev.badhabits.application.mvp.model.interactor.about
 
-class AboutInteractor {
+import padev.badhabits.core.interactor.BaseInteractor
+
+class AboutInteractor: BaseInteractor(), IAboutInteractor {
 }

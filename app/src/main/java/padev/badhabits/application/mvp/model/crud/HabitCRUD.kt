@@ -1,15 +1,13 @@
-package padev.badhabits.Data.CRUD
+package padev.badhabits.application.mvp.model.crud
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import padev.badhabits.Data.AbstractData
-import padev.badhabits.Data.Habit
-import padev.badhabits.Data.IDataAccessObject
+import padev.badhabits.application.mvp.model.entity.HabitEntity
 import java.util.*
 
-class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db", null, 1), IDataAccessObject {
+class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db", null, 1) {
 
 /*
     private val DATABASE_VERSION = 1
@@ -30,21 +28,19 @@ class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db
         onCreate(db)
     }
 
-    override fun insertData(data: AbstractData) {
-
-        val habit = data as Habit
+    fun insertData(habitEntity: HabitEntity) {
 
         val values = ContentValues()
-        values.put(KEY_NAME, habit.name)
+        values.put(KEY_NAME, habitEntity.name)
 
         val db = this.writableDatabase
 
-        habit.id = db.insert(TABLE_HABITS, null, values)
+        habitEntity.id = db.insert(TABLE_HABITS, null, values)
 
         db.close()
     }
 
-    override fun selectData(id: Int): AbstractData {
+    fun selectData(id: Int): HabitEntity {
 
         val db = this.readableDatabase
 
@@ -53,12 +49,12 @@ class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db
 
         cursor?.moveToFirst()
 
-        return Habit(cursor.getString(0).toLong(), cursor.getString(1), false, false, false)
+        return HabitEntity(cursor.getString(0).toLong(), cursor.getString(1), false, false, false)
     }
 
-    override fun selectAllData(): ArrayList<AbstractData> {
+    fun selectAllData(): ArrayList<HabitEntity> {
 
-        val habits = ArrayList<AbstractData>()
+        val habits = ArrayList<HabitEntity>()
 
         val selectQuery = "SELECT  * FROM $TABLE_HABITS"
 
@@ -67,7 +63,7 @@ class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db
 
         if (cursor.moveToFirst()) {
             do {
-                val habit = Habit(cursor.getString(0).toLong(), cursor.getString(1), false, false, false)
+                val habit = HabitEntity(cursor.getString(0).toLong(), cursor.getString(1), false, false, false)
                 habits.add(habit)
             } while (cursor.moveToNext())
         }
@@ -75,25 +71,26 @@ class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db
         return habits
     }
 
-    override fun updateData(data: AbstractData): Int {
-        val habit = data as Habit
+    fun updateData(habitEntity: HabitEntity): Int {
 
         val db = this.writableDatabase
 
         val values = ContentValues()
-        values.put(KEY_NAME, habit.name)
+        values.put(KEY_NAME, habitEntity.name)
 
         return db.update(TABLE_HABITS, values, "$KEY_ID = ?",
-                arrayOf(habit.id.toString()))
+                arrayOf(habitEntity.id.toString()))
     }
 
-    override fun deleteData(id: Int) {
+    fun deleteData(id: Long) {
+
         val db = this.writableDatabase
         db.delete(TABLE_HABITS, "$KEY_ID = ?", arrayOf(id.toString()))
         db.close()
     }
 
-    override fun deleteAllData() {
+    fun deleteAllData() {
+
         val db = this.writableDatabase
         db.delete(TABLE_HABITS, null, null)
         db.close()

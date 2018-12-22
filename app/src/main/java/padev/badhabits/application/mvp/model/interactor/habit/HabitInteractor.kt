@@ -1,4 +1,6 @@
 package padev.badhabits.application.mvp.model.interactor.habit
 
-class HabitInteractor {
+import padev.badhabits.core.interactor.BaseInteractor
+
+class HabitInteractor: BaseInteractor(), IHabitInteractor {
 }

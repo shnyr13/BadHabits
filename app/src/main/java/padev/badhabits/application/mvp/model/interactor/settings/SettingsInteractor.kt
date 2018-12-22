@@ -1,4 +1,6 @@
 package padev.badhabits.application.mvp.model.interactor.settings
 
-class SettingsInteractor {
+import padev.badhabits.core.interactor.BaseInteractor
+
+class SettingsInteractor: BaseInteractor(), ISettingsInteractor {
 }

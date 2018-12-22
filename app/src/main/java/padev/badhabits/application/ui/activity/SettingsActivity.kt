@@ -1,6 +1,7 @@
 package padev.badhabits.application.ui.activity
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.widget.Toolbar
 import com.arellomobile.mvp.presenter.InjectPresenter
 import padev.badhabits.R
@@ -24,5 +25,13 @@ class SettingsActivity: BaseActivity(), ISettingsView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         supportActionBar?.title = getString(R.string.settings)
+    }
+
+    override fun showLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
