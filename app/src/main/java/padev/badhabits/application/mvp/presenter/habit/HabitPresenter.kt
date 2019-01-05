@@ -1,11 +1,9 @@
 package padev.badhabits.application.mvp.presenter.habit;
 
-import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
+import padev.badhabits.application.mvp.model.interactor.habit.HabitInteractor
+import padev.badhabits.application.mvp.view.IHabitView
 
-import padev.badhabits.application.mvp.view.IHabitView;
+class HabitPresenter(val viewState: IHabitView): IHabitPresenter {
 
-@InjectViewState
-class HabitPresenter: MvpPresenter<IHabitView>(), IHabitPresenter {
-    
+    val interactor = HabitInteractor(this)
 }                                                           

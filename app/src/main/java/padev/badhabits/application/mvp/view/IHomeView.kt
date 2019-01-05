@@ -1,15 +1,20 @@
 package padev.badhabits.application.mvp.view;
 
+import android.content.Context
 import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import padev.badhabits.application.mvp.model.entity.HabitEntity
 
-@StateStrategyType(value = AddToEndSingleStrategy::class)
 interface IHomeView: MvpView {
+
+    fun showHabit(habit: HabitEntity)
 
     fun showAddHabitDialog()
 
     fun showLoading()
 
     fun hideLoading()
+
+
+
+    fun getContext(): Context
 }

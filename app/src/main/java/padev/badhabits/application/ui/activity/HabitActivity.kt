@@ -1,4 +1,4 @@
-package padev.badhabits.application.ui.activity;
+package padev.badhabits.application.ui.activity
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.EditText
 import butterknife.OnClick
-import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jjoe64.graphview.series.DataPoint
 import padev.badhabits.application.mvp.model.crud.HabitDetailsCRUD
 import padev.badhabits.application.mvp.model.entity.HabitEntity
@@ -17,13 +16,12 @@ import padev.badhabits.R
 import padev.badhabits.application.common.utils.KeyboardsUtils
 import padev.badhabits.application.mvp.presenter.habit.HabitPresenter
 import padev.badhabits.application.mvp.view.IHabitView
-import padev.badhabits.application.ui.fragment.SampleFragmentPagerAdapter
+import padev.badhabits.application.ui.fragment.adapter.HabitFragmentPagerAdapter
 import padev.badhabits.core.view.BaseActivity
 
 class HabitActivity: BaseActivity(), IHabitView {
 
-    @InjectPresenter
-    lateinit var presenter: HabitPresenter
+    var presenter = HabitPresenter(this)
 
     private lateinit var habit: HabitEntity
 
@@ -34,7 +32,6 @@ class HabitActivity: BaseActivity(), IHabitView {
     private var doseArr: ArrayList<DataPoint> = ArrayList()
     private var  concentrationArr: ArrayList<DataPoint> = ArrayList()
     private var weightArr: ArrayList<DataPoint> = ArrayList()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -58,7 +55,7 @@ class HabitActivity: BaseActivity(), IHabitView {
         supportActionBar?.title = habit.name
 
         viewPager = findViewById(R.id.activity_habit_view_pager)
-        viewPager.adapter = SampleFragmentPagerAdapter(supportFragmentManager, this)
+        viewPager.adapter = HabitFragmentPagerAdapter(supportFragmentManager, this)
 
         tabLayout = findViewById(R.id.activity_habit_tabs)
         tabLayout.setupWithViewPager(viewPager)
@@ -68,7 +65,7 @@ class HabitActivity: BaseActivity(), IHabitView {
         var i = 1
         for (data in habitsDetails) {
 
-            doseArr.add(DataPoint(i.toDouble(), (data as HabitDetailsEntity).dose.toDouble()))
+            doseArr.add(DataPoint(i.toDouble(), data.dose.toDouble()))
             concentrationArr.add(DataPoint(i.toDouble(), data.concentration.toDouble()))
             weightArr.add(DataPoint(i.toDouble(), data.weight.toDouble()))
 
@@ -132,17 +129,12 @@ class HabitActivity: BaseActivity(), IHabitView {
 
         val page = viewPager.currentItem
 
-        return /*when (page) {
-            0 -> doseArr.toArray() as Array<DataPoint>
-            1 -> concentrationArr.toArray() as Array<DataPoint>
-            2 -> weightArr.toArray() as Array<DataPoint>
-            else -> */arrayOf(
+        return arrayOf (
                 DataPoint(0.toDouble(), 1.toDouble()),
                 DataPoint(1.toDouble(), 5.toDouble()),
                 DataPoint(2.toDouble(), 3.toDouble()),
                 DataPoint(3.toDouble(), 2.toDouble()),
                 DataPoint(4.toDouble(), 6.toDouble())
             )
-        //}
     }
 }

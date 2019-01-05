@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import padev.badhabits.application.mvp.model.entity.HabitEntity
 import java.util.*
 
-class HabitCRUD(context: Context): SQLiteOpenHelper(context, "padev.badhabits.db", null, 1) {
+class HabitCRUD(context: Context?): SQLiteOpenHelper(context, "padev.badhabits.db", null, 1) {
 
 /*
     private val DATABASE_VERSION = 1

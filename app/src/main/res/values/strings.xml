@@ -21,4 +21,8 @@
     <string name="habit_danger_money">Деньги</string>
     <string name="habit_danger_health">Здоровье</string>
 
+    <string name="habit_tab_calendar">Календарь</string>
+    <string name="habit_tab_cases">Список</string>
+    <string name="habit_tab_result">Итог</string>
+
 </resources>

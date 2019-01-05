@@ -13,6 +13,4 @@ open class BaseFragment: MvpAppCompatFragment() {
 
         ButterKnife.bind(this, view)
     }
-
-
 }

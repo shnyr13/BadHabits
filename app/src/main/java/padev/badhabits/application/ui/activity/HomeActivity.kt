@@ -1,7 +1,7 @@
 package padev.badhabits.application.ui.activity;
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -12,33 +12,28 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ProgressBar
 import butterknife.BindView
+import butterknife.ButterKnife
 import butterknife.OnClick
-import com.arellomobile.mvp.presenter.InjectPresenter
 import com.facebook.stetho.Stetho
 import com.mikepenz.iconics.typeface.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
-import padev.badhabits.application.mvp.model.crud.HabitCRUD
-import padev.badhabits.application.mvp.model.entity.HabitEntity
 import padev.badhabits.R
+import padev.badhabits.application.mvp.model.entity.HabitEntity
 import padev.badhabits.application.mvp.presenter.home.HomePresenter
 import padev.badhabits.application.mvp.view.IHomeView
 import padev.badhabits.application.ui.fragment.HabitCardFragment
 import padev.badhabits.core.view.BaseActivity
 
-
 class HomeActivity: BaseActivity(), IHomeView {
-
-    @InjectPresenter
-    lateinit var  presenter: HomePresenter
-
-    lateinit var mDrawerResult: Drawer.Result
 
     private val TAG = HomeActivity::class.java.simpleName
 
-    private lateinit var habitCRUD: HabitCRUD
+    private val presenter = HomePresenter(this)
+
+    private lateinit var mDrawerResult: Drawer.Result
 
     @BindView(R.id.activity_home_fab)
     lateinit var fab: FloatingActionButton
@@ -48,6 +43,8 @@ class HomeActivity: BaseActivity(), IHomeView {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_home)
+
+        ButterKnife.bind(this)
 
         val toolbar = findViewById<Toolbar>(R.id.activity_home_appbar_toolbar)
         setSupportActionBar(toolbar)
@@ -87,21 +84,10 @@ class HomeActivity: BaseActivity(), IHomeView {
 
                 .build()
 
-        // for SQLite view
+        // TODO = remove = Debug: for SQLite view
         Stetho.initializeWithDefaults(this)
 
-
-        //TODO presenter.getHabits
-
-        habitCRUD = HabitCRUD(this)
-
-        val habits =  habitCRUD.selectAllData()
-
-        for (data in habits) {
-
-            val habit = data as HabitEntity
-            createHabitCard(habit)
-        }
+        presenter.getAllHabits()
     }
 
     override fun onBackPressed() {
@@ -111,6 +97,17 @@ class HomeActivity: BaseActivity(), IHomeView {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun showHabit(habitEntity: HabitEntity) {
+
+        val habitCardFragment = HabitCardFragment()
+
+        habitCardFragment.mHabitEntity = habitEntity
+
+        supportFragmentManager.beginTransaction()
+                .add(R.id.activity_home_content, habitCardFragment)
+                .commit()
     }
 
     override fun showLoading() {
@@ -140,13 +137,12 @@ class HomeActivity: BaseActivity(), IHomeView {
 
         alertDialogBuilder.setPositiveButton("Добавить") { _: DialogInterface, _: Int ->
 
-            val habit = HabitEntity((-1).toLong(), habitNameEditText.text.toString(), timeCheckBox.isChecked, moneyCheckBox.isChecked, healthCheckBox.isChecked)
-
-            // TODO presenter.addHabit(...)
-
-            habitCRUD.insertData(habit)
-
-            createHabitCard(habit)
+            presenter.habitAddPositive (
+                    habitNameEditText.text.toString(),
+                    timeCheckBox.isChecked,
+                    moneyCheckBox.isChecked,
+                    healthCheckBox.isChecked
+            )
         }
 
         alertDialogBuilder.setNegativeButton("Отмена") { dialog: DialogInterface, _: Int ->
@@ -159,24 +155,14 @@ class HomeActivity: BaseActivity(), IHomeView {
     }
 
 
-    @SuppressLint("InflateParams")
     @OnClick(R.id.activity_home_fab)
     fun addHabitClicked(view: View) {
-        // TODO:
-        // mHomePresenter.habitAddStart()
 
-       showAddHabitDialog()
-
+       presenter.habitAddStart()
     }
 
-    private fun createHabitCard(habitEntity: padev.badhabits.application.mvp.model.entity.HabitEntity) {
+    override fun getContext(): Context {
 
-        val habitCardFragment = HabitCardFragment()
-
-        habitCardFragment.mHabitEntity = habitEntity
-
-        supportFragmentManager.beginTransaction()
-                .add(R.id.activity_home_content, habitCardFragment)
-                .commit()
+        return this@HomeActivity
     }
 }
