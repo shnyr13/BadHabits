@@ -53,6 +53,8 @@
 
         </activity>
 
+        <service android:name=".application.service.NotificationBuilderService" />
+
     </application>
 
 </manifest>

@@ -3,6 +3,10 @@ package padev.badhabits.application.mvp.presenter.home;
 import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import padev.badhabits.application.mvp.model.entity.HabitEntity
 import padev.badhabits.application.mvp.model.interactor.home.HomeInteractor
 import padev.badhabits.application.mvp.view.IHomeView
@@ -15,20 +19,24 @@ class HomePresenter(var viewState: IHomeView) : IHomePresenter {
     val TAG = HomePresenter::class.java.simpleName
 
     override fun getAllHabits() {
-        interactor.getAllHabits()
-    }
 
-    override fun showAllHabits(habits: ArrayList<HabitEntity>) {
+        viewState.showLoading()
 
-        for (habit in habits) {
+        val dispose = interactor.getAllHabits()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ( {
+                    viewState.showHabit(it)
+                    viewState.hideLoading()
+                },
+                {
 
-            viewState.showHabit(habit)
-        }
-    }
+                },
+                {
 
-    override fun showHabit(habit: HabitEntity) {
+                } )
 
-        viewState.showHabit(habit)
+        if (dispose.isDisposed) viewState.hideLoading()
     }
 
     override fun habitAddStart() {
@@ -38,7 +46,22 @@ class HomePresenter(var viewState: IHomeView) : IHomePresenter {
 
     override fun habitAddPositive(name: String, time: Boolean, money: Boolean, health: Boolean) {
 
-        interactor.addHabit(name, time, money, health)
+        viewState.showLoading()
+
+        val dispose = interactor.addHabit(name, time, money, health)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showHabit(it)
+                    viewState.hideLoading()
+                },
+                        {
+
+                        },
+                        {
+
+                        })
+        if (dispose.isDisposed) viewState.hideLoading()
     }
 
     override fun habitAddNegative() {

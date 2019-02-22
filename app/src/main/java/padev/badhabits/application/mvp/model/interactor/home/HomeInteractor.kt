@@ -1,5 +1,6 @@
 package padev.badhabits.application.mvp.model.interactor.home
 
+import io.reactivex.Observable
 import padev.badhabits.application.mvp.model.crud.HabitCRUD
 import padev.badhabits.application.mvp.model.entity.HabitEntity
 import padev.badhabits.application.mvp.presenter.home.IHomePresenter
@@ -9,19 +10,29 @@ class HomeInteractor (val presenter: IHomePresenter): BaseInteractor(), IHomeInt
 
     private val habitCRUD: HabitCRUD = HabitCRUD(presenter.getContext())
 
-    override fun getAllHabits() {
+    override fun getAllHabits(): Observable<HabitEntity> {
 
-        val habits =  habitCRUD.selectAllData()
+        return Observable.create {
 
-        presenter.showAllHabits(habits)
+            val habits =  habitCRUD.selectAllData()
+
+            for (habit in habits) {
+                it.onNext(habit)
+            }
+        }
     }
 
-    override fun addHabit(name: String, time: Boolean, money: Boolean, health: Boolean) {
+    override fun addHabit(name: String, time: Boolean, money: Boolean, health: Boolean): Observable<HabitEntity> {
 
-        val habit = HabitEntity((-1).toLong(), name, time, money, health)
+        return Observable.create {
 
-        habitCRUD.insertData(habit)
+            val habit = HabitEntity((-1).toLong(), name, time, money, health)
 
-        presenter.showHabit(habit)
+            habitCRUD.insertData(habit)
+
+            it.onNext(habit)
+        }
+
+
     }
 }

@@ -15,6 +15,6 @@ interface IHomeView: MvpView {
     fun hideLoading()
 
 
-
+    // TODO delete
     fun getContext(): Context
 }

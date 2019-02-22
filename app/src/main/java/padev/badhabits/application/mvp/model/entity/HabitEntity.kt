@@ -1,6 +1,6 @@
 package padev.badhabits.application.mvp.model.entity
 
-class HabitEntity(
+open class HabitEntity(
         var id: Long,
         var name: String,
         var time: Boolean,

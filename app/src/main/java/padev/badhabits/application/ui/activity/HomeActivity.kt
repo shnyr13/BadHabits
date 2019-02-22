@@ -24,6 +24,7 @@ import padev.badhabits.R
 import padev.badhabits.application.mvp.model.entity.HabitEntity
 import padev.badhabits.application.mvp.presenter.home.HomePresenter
 import padev.badhabits.application.mvp.view.IHomeView
+import padev.badhabits.application.service.NotificationBuilderService
 import padev.badhabits.application.ui.fragment.HabitCardFragment
 import padev.badhabits.core.view.BaseActivity
 
@@ -45,6 +46,9 @@ class HomeActivity: BaseActivity(), IHomeView {
         setContentView(R.layout.activity_home)
 
         ButterKnife.bind(this)
+
+        val intent = Intent(this, NotificationBuilderService::class.java)
+        startService(intent)
 
         val toolbar = findViewById<Toolbar>(R.id.activity_home_appbar_toolbar)
         setSupportActionBar(toolbar)

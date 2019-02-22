@@ -30,6 +30,9 @@ class HabitCRUD(context: Context?): SQLiteOpenHelper(context, "padev.badhabits.d
 
     fun insertData(habitEntity: HabitEntity) {
 
+        // TODO delete
+        Thread.sleep(5000)
+
         val values = ContentValues()
         values.put(KEY_NAME, habitEntity.name)
 
@@ -53,6 +56,9 @@ class HabitCRUD(context: Context?): SQLiteOpenHelper(context, "padev.badhabits.d
     }
 
     fun selectAllData(): ArrayList<HabitEntity> {
+
+        //TODO delete
+        Thread.sleep(5000)
 
         val habits = ArrayList<HabitEntity>()
 

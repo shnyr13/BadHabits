@@ -6,4 +6,10 @@ import padev.badhabits.application.mvp.view.IHabitView
 class HabitPresenter(val viewState: IHabitView): IHabitPresenter {
 
     val interactor = HabitInteractor(this)
-}                                                           
+
+
+    override fun getHabitDetails(id: Long) {
+
+
+    }
+}
